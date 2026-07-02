@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
-import { ArrowRight, MapPin } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import heroEscapeRoomImg from '../../assets/hero_escape_room.png';
 
 export default function Hero() {
   return (
@@ -76,9 +77,9 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-[3rem] transform rotate-3" />
           <div className="absolute inset-0 bg-dark-card border border-white/10 rounded-[3rem] transform -rotate-3 overflow-hidden shadow-2xl">
             <img 
-              src="https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?auto=format&fit=crop&q=80&w=1200" 
+              src={heroEscapeRoomImg} 
               alt="People solving an escape room puzzle" 
-              className="w-full h-full object-cover opacity-80 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700"
+              className="w-full h-full object-cover opacity-90 transition-all duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
             

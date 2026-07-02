@@ -1,0 +1,6 @@
+{
+  "name": "Puzzled Escape Rooms",
+  "description": "A sleek, modern, and playful website for an escape room company in Sudbury, Ontario featuring an online booking system.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

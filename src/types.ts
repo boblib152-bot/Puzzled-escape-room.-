@@ -8,6 +8,8 @@ export interface Room {
   minPlayers: number;
   maxPlayers: number;
   image: string;
+  type: 'on-site' | 'at-home';
+  priceInfo: string;
 }
 
 export interface BookingDetails {

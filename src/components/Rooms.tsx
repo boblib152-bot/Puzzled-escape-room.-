@@ -50,8 +50,8 @@ export default function Rooms() {
                 />
                 
                 {/* Fixed Badge for Price */}
-                <div className="absolute top-6 right-6 bg-primary text-black rounded-full w-12 h-12 flex items-center justify-center font-black rotate-12 z-20 shadow-[0_0_20px_rgba(250,204,21,0.3)]">
-                  $25
+                <div className="absolute top-6 right-6 bg-primary text-black rounded-full px-3 py-2 flex items-center justify-center font-black rotate-12 z-20 shadow-[0_0_20px_rgba(250,204,21,0.3)] text-xs uppercase tracking-wider">
+                  {room.priceInfo}
                 </div>
 
                 {/* Stats Overlay */}
@@ -70,8 +70,11 @@ export default function Rooms() {
               {/* Content */}
               <div className="p-8 flex flex-col flex-grow relative z-20 bg-dark-card mt-[-2rem] rounded-t-3xl border-t border-white/5">
                 <div className="mb-2">
-                  <div className="text-primary font-bold text-xs uppercase mb-1 tracking-widest">
-                    {room.difficulty > 3 ? 'Expert' : room.difficulty > 2 ? 'Intermediate' : 'Beginner'}
+                  <div className="text-primary font-bold text-xs uppercase mb-1 tracking-widest flex items-center justify-between">
+                    <span>{room.difficulty > 3 ? 'Expert' : room.difficulty > 2 ? 'Intermediate' : 'Beginner'}</span>
+                    <span className="bg-white/10 text-white px-2 py-0.5 rounded text-[10px] tracking-normal font-medium capitalize">
+                      {room.type === 'at-home' ? 'At-Home' : 'On-Site'}
+                    </span>
                   </div>
                   <h3 className="text-2xl font-display font-black text-white">{room.title}</h3>
                   <p className="text-xs text-white/40 mt-1">{room.durationMins} Minutes • {room.minPlayers}-{room.maxPlayers} Players</p>

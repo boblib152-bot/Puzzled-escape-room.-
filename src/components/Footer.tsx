@@ -1,6 +1,13 @@
-import { Puzzle, MapPin, Phone, Mail, Instagram, Facebook, Twitter } from 'lucide-react';
+import { MapPin, Phone, Mail, Instagram, Facebook } from 'lucide-react';
+import { COMPANY_INFO } from '../data';
+import logoImg from '../../assets/logo.png';
 
-export default function Footer() {
+interface FooterProps {
+  currentView: 'home' | 'faq';
+  navigateTo: (view: 'home' | 'faq', targetId?: string) => void;
+}
+
+export default function Footer({ currentView, navigateTo }: FooterProps) {
   return (
     <footer id="location" className="bg-black border-t border-white/10">
       
@@ -9,21 +16,20 @@ export default function Footer() {
         <div className="flex flex-wrap justify-center md:justify-start gap-8 md:gap-12">
           <div className="flex flex-col">
             <span className="text-[10px] text-white/30 uppercase tracking-widest">Location</span>
-            <span className="text-sm font-bold">123 Barrydowne Rd, Sudbury</span>
+            <span className="text-sm font-bold">{COMPANY_INFO.address.split(',')[0]}, Sudbury</span>
           </div>
           <div className="flex flex-col">
             <span className="text-[10px] text-white/30 uppercase tracking-widest">Availability</span>
-            <span className="text-sm font-bold text-green-400 italic">Games Open Now</span>
+            <span className="text-sm font-bold text-green-400 italic">By Appointment Only</span>
           </div>
           <div className="flex flex-col">
             <span className="text-[10px] text-white/30 uppercase tracking-widest">Call Us</span>
-            <span className="text-sm font-bold text-primary">705-555-0123</span>
+            <span className="text-sm font-bold text-primary">{COMPANY_INFO.phone}</span>
           </div>
         </div>
         <div className="flex gap-4">
-          <a href="#" className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-xs hover:border-primary hover:text-primary transition-all">IG</a>
-          <a href="#" className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-xs hover:border-primary hover:text-primary transition-all">FB</a>
-          <a href="#" className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-xs hover:border-primary hover:text-primary transition-all">TW</a>
+          <a href={COMPANY_INFO.instagramUrl} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-xs hover:border-primary hover:text-primary transition-all">IG</a>
+          <a href={COMPANY_INFO.facebookUrl} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-xs hover:border-primary hover:text-primary transition-all">FB</a>
         </div>
       </div>
 
@@ -32,26 +38,20 @@ export default function Footer() {
           
           {/* Brand */}
           <div className="col-span-1 lg:col-span-1">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <Puzzle className="w-5 h-5 text-black" />
-              </div>
-              <span className="font-display font-black text-2xl tracking-tighter text-white">
-                PUZZLED<span className="text-primary">.</span>
-              </span>
+            <div className="flex items-center mb-6">
+              <button onClick={() => navigateTo('home')} className="focus:outline-none">
+                <img src={logoImg} alt="Puzzled Escape Rooms Logo" className="h-10 w-auto object-contain" />
+              </button>
             </div>
             <p className="text-zinc-400 text-sm leading-relaxed mb-6">
-              Sudbury's premier escape room experience. Immersive storytelling, challenging puzzles, and unforgettable memories.
+              Sudbury's premier escape room experience. Custom designed and built rooms featuring cutting-edge technologies.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-primary hover:text-black transition-colors">
+              <a href={COMPANY_INFO.instagramUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-primary hover:text-black transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-primary hover:text-black transition-colors">
+              <a href={COMPANY_INFO.facebookUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-primary hover:text-black transition-colors">
                 <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-primary hover:text-black transition-colors">
-                <Twitter className="w-5 h-5" />
               </a>
             </div>
           </div>
@@ -60,11 +60,25 @@ export default function Footer() {
           <div>
             <h4 className="font-display font-black text-white mb-6 uppercase tracking-wider text-sm">Quick Links</h4>
             <ul className="space-y-3">
-              {['Our Rooms', 'Book Online', 'Parties & Events', 'FAQ', 'Gift Cards'].map(link => (
-                <li key={link}>
-                  <a href="#" className="text-zinc-400 hover:text-primary transition-colors text-sm">
-                    {link}
-                  </a>
+              {[
+                { name: 'Our Rooms', id: 'rooms' },
+                { name: 'Parties & Events', id: 'parties' },
+                { name: 'FAQ', id: 'faq' },
+                { name: 'Book Online', id: 'booking' }
+              ].map(link => (
+                <li key={link.name}>
+                  <button
+                    onClick={() => {
+                      if (link.id === 'faq') {
+                        navigateTo('faq');
+                      } else {
+                        navigateTo('home', link.id);
+                      }
+                    }}
+                    className="text-zinc-400 hover:text-primary transition-colors text-sm text-left focus:outline-none cursor-pointer"
+                  >
+                    {link.name}
+                  </button>
                 </li>
               ))}
             </ul>
@@ -77,18 +91,20 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                 <span className="text-zinc-400 text-sm">
-                  123 Escape Avenue<br />
-                  Sudbury, ON P3E 1A1<br />
+                  2335 Lasalle Blvd<br />
+                  Sudbury, ON P3A 2A9<br />
                   Canada
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary shrink-0" />
-                <span className="text-zinc-400 text-sm">(705) 555-0199</span>
+                <span className="text-zinc-400 text-sm">{COMPANY_INFO.phone}</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary shrink-0" />
-                <span className="text-zinc-400 text-sm">info@puzzledescape.ca</span>
+                <a href={`mailto:${COMPANY_INFO.email}`} className="text-zinc-400 text-sm hover:text-primary transition-colors">
+                  {COMPANY_INFO.email}
+                </a>
               </li>
             </ul>
           </div>
@@ -97,26 +113,12 @@ export default function Footer() {
           <div>
             <h4 className="font-display font-black text-white mb-6 uppercase tracking-wider text-sm">Hours</h4>
             <ul className="space-y-3 text-sm">
-              <li className="flex justify-between border-b border-white/5 pb-2">
-                <span className="text-zinc-400">Mon - Wed</span>
-                <span className="text-white">Closed</span>
-              </li>
-              <li className="flex justify-between border-b border-white/5 pb-2">
-                <span className="text-zinc-400">Thursday</span>
-                <span className="text-white">4PM - 10PM</span>
-              </li>
-              <li className="flex justify-between border-b border-white/5 pb-2">
-                <span className="text-zinc-400">Friday</span>
-                <span className="text-white">2PM - 11PM</span>
-              </li>
-              <li className="flex justify-between border-b border-white/5 pb-2">
-                <span className="text-zinc-400">Saturday</span>
-                <span className="text-white">10AM - 11PM</span>
-              </li>
-              <li className="flex justify-between">
-                <span className="text-zinc-400">Sunday</span>
-                <span className="text-white">10AM - 8PM</span>
-              </li>
+              {COMPANY_INFO.hours.map((h, i) => (
+                <li key={i} className="flex justify-between border-b border-white/5 pb-2 last:border-0 last:pb-0">
+                  <span className="text-zinc-400">{h.days}</span>
+                  <span className="text-white">{h.time}</span>
+                </li>
+              ))}
             </ul>
           </div>
 

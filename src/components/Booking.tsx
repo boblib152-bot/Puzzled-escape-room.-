@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle2, ChevronRight, ChevronLeft, Calendar, Users, Info, Clock } from 'lucide-react';
 import { ROOMS, TIME_SLOTS } from '../data';
@@ -24,7 +24,7 @@ export default function Booking() {
   const handleNext = () => setStep(s => Math.min(s + 1, 4));
   const handleBack = () => setStep(s => Math.max(s - 1, 1));
 
-  const submitBooking = (e: React.FormEvent) => {
+  const submitBooking = (e: FormEvent) => {
     e.preventDefault();
     if (isStep3Valid) {
       handleNext();
@@ -94,7 +94,15 @@ export default function Booking() {
                     {ROOMS.map(room => (
                       <div 
                         key={room.id}
-                        onClick={() => setSelectedRoom(room.id)}
+                        onClick={() => {
+                          setSelectedRoom(room.id);
+                          const currentPlayers = parseInt(formData.players) || 4;
+                          if (currentPlayers < room.minPlayers) {
+                            setFormData(prev => ({ ...prev, players: String(room.minPlayers) }));
+                          } else if (currentPlayers > room.maxPlayers) {
+                            setFormData(prev => ({ ...prev, players: String(room.maxPlayers) }));
+                          }
+                        }}
                         className={`p-4 rounded-2xl border-2 cursor-pointer transition-all ${
                           selectedRoom === room.id 
                             ? 'border-primary bg-primary/10' 
@@ -223,9 +231,18 @@ export default function Booking() {
                             onChange={(e) => setFormData({...formData, players: e.target.value})}
                             className="w-full bg-black border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-primary appearance-none cursor-pointer"
                           >
-                            {[2,3,4,5,6,7,8].map(num => (
-                              <option key={num} value={num}>{num} Players</option>
-                            ))}
+                            {(() => {
+                              const room = ROOMS.find(r => r.id === selectedRoom);
+                              const min = room?.minPlayers || 1;
+                              const max = room?.maxPlayers || 8;
+                              const options = [];
+                              for (let i = min; i <= max; i++) {
+                                options.push(i);
+                              }
+                              return options.map(num => (
+                                <option key={num} value={String(num)}>{num} {num === 1 ? 'Player' : 'Players'}</option>
+                              ));
+                            })()}
                           </select>
                         </div>
                       </div>
@@ -240,7 +257,14 @@ export default function Booking() {
                           <li><span className="text-zinc-500">Time:</span> {selectedTime}</li>
                           <li className="pt-2 mt-2 border-t border-white/10 font-bold text-white flex justify-between">
                             <span>Total (Est.)</span>
-                            <span>${parseInt(formData.players) * 30}.00</span>
+                            <span>
+                              {(() => {
+                                const room = ROOMS.find(r => r.id === selectedRoom);
+                                if (!room) return '$0.00';
+                                if (room.type === 'at-home') return '$40.00';
+                                return `$${(parseInt(formData.players) || 0) * 30}.00`;
+                              })()}
+                            </span>
                           </li>
                         </ul>
                       </div>

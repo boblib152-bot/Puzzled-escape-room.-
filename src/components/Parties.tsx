@@ -6,17 +6,17 @@ export default function Parties() {
     {
       icon: <PartyPopper className="w-8 h-8 text-black" />,
       title: 'Birthday Parties',
-      desc: 'Celebrate with a bang. Special party packages include private room access, catering options, and a guaranteed unforgettable experience.'
+      desc: 'Celebrate a birthday with us! Kids are welcome to play by themselves (if under 12, an adult must remain on site) and are given extra hints and clues for success.'
     },
     {
       icon: <Briefcase className="w-8 h-8 text-black" />,
       title: 'Corporate Team Building',
-      desc: 'Communication, leadership, and problem-solving under pressure. The perfect corporate outing to build stronger teams.'
+      desc: 'Communication, leadership, and problem-solving under pressure. We can accommodate group bookings outside regular hours of operation.'
     },
     {
       icon: <Sparkles className="w-8 h-8 text-black" />,
-      title: 'Special Events',
-      desc: 'Bachelor/bachelorette parties, proposals, or just a large family gathering. We can customize the experience to make it yours.'
+      title: 'Group Events & Rates',
+      desc: 'Perfect for bachelor(ette) parties, field trips, or family outings. Admission is $30/player (+tax) with a maximum capacity of 25 players per hour.'
     }
   ];
 
@@ -40,10 +40,25 @@ export default function Parties() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-zinc-400 text-lg mb-10 leading-relaxed"
+              className="text-zinc-400 text-lg mb-6 leading-relaxed"
             >
-              Looking for a unique venue in Sudbury? Our facility is equipped to handle groups of up to 30 people simultaneously across our different rooms. We offer dedicated party spaces, catering partnerships, and event coordination.
+              Looking for a unique event activity in Sudbury? Escape rooms make the perfect activity for birthdays, bachelor(ette) parties, field trips, or team building! Everyone loves being puzzled.
             </motion.p>
+
+            {/* Construction Alert */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-10 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-2xl flex items-start gap-3"
+            >
+              <div className="bg-yellow-500 text-black px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider mt-0.5 shrink-0">
+                Notice
+              </div>
+              <p className="text-sm text-zinc-300">
+                Our party room is currently under construction. While we cannot offer on-site space for cake/presents, groups of up to 25 players can book games simultaneously!
+              </p>
+            </motion.div>
 
             <div className="space-y-6">
               {offerings.map((item, index) => (
@@ -60,18 +75,31 @@ export default function Parties() {
                   </div>
                   <div>
                     <h4 className="text-xl font-bold text-white mb-2">{item.title}</h4>
-                    <p className="text-zinc-400">{item.desc}</p>
+                    <p className="text-zinc-400 text-sm leading-relaxed">{item.desc}</p>
                   </div>
                 </motion.div>
               ))}
             </div>
+
+            {/* Fine Print */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mt-10 pt-6 border-t border-white/10 text-xs text-zinc-500 space-y-2"
+            >
+              <h5 className="font-bold text-zinc-400 uppercase tracking-widest text-[10px] mb-2">The Fine Print</h5>
+              <p>• Changes in group size must be communicated at least 72 hours prior to the booking start time. Reductions without notice will be charged at the original booking size.</p>
+              <p>• Deposits are non-refundable within 48 hours of the booking start time. Bookings require a deposit equivalent to one person's admission ($33.90 tax inc.).</p>
+              <p>• If your group is more than 25 players, you will be split in half and play over the course of 2 hours.</p>
+            </motion.div>
 
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.6 }}
-              className="mt-12"
+              className="mt-10"
             >
               <button 
                 onClick={() => {
